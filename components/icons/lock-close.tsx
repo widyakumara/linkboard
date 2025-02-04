@@ -1,4 +1,6 @@
-export function LockClose(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function LockCloseIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

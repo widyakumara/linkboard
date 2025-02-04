@@ -1,5 +1,5 @@
-import { Discord } from "~/components/icons/discord";
-import { Github } from "~/components/icons/github";
+import { DiscordIcon } from "~/components/icons/discord";
+import { GithubIcon } from "~/components/icons/github";
 import { Button } from "~/components/primitives/button";
 import { DialogBlur } from "~/components/primitives/dialog";
 
@@ -19,11 +19,11 @@ export const LoginDialog = ({ open, onClose }: LoginDialogProp) => {
 
         <div className="flex flex-col space-y-2">
           <Button href={"/login/github"} className="!font-normal">
-            <Github className="size-5" />
+            <GithubIcon className="size-5" />
             Continue with GitHub
           </Button>
           <Button href={"/login/discord"} className="!font-normal">
-            <Discord className="size-5" />
+            <DiscordIcon className="size-5" />
             Continue with Discord
           </Button>
 

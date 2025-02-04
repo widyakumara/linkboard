@@ -1,4 +1,5 @@
 import { Ban, LockKeyhole, Tag, Zap } from "lucide-react";
+import { JSX } from "react";
 import Balancer from "react-wrap-balancer";
 import { Container, Section } from "~/components/blocks";
 

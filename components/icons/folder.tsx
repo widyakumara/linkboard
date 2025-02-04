@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export function FolderIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg

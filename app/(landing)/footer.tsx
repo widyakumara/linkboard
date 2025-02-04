@@ -1,6 +1,6 @@
 import { Container, Section } from "~/components/blocks";
-import { Github } from "~/components/icons/github";
-import { Twitter } from "~/components/icons/twitter";
+import { GithubIcon } from "~/components/icons/github";
+import { TwitterIcon } from "~/components/icons/twitter";
 
 export const Footer = () => {
   return (
@@ -9,10 +9,10 @@ export const Footer = () => {
         <Container className="not-prose flex flex-col md:flex-row md:gap-2 gap-6 justify-between md:items-center">
           <div className="flex gap-4">
             <a href="https://github.com/ephraimduncan" target="_blank">
-              <Github />
+              <GithubIcon />
             </a>
             <a href="https://x.com/ephraimduncan" target="_blank">
-              <Twitter />
+              <TwitterIcon />
             </a>
           </div>
           <p className="text-muted-foreground">

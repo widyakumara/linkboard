@@ -1,4 +1,6 @@
-export function Trash(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function TrashIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

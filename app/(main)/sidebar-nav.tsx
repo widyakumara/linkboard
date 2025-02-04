@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { BookmarkIcon } from "~/components/icons/bookmark";
 import { FolderIcon } from "~/components/icons/folder";
-import { Sparkle } from "~/components/icons/sparkle";
+import { SparkleIcon } from "~/components/icons/sparkle";
 import {
   SidebarItem,
   SidebarLabel,
@@ -25,7 +25,7 @@ export function SidebarNavigation({ user }: SideNavigationProps) {
           href="/discover"
           current={pathname.startsWith("/discover")}
         >
-          <Sparkle className="size-5" />
+          <SparkleIcon className="size-5" />
           <SidebarLabel>Discover</SidebarLabel>
         </SidebarItem>
         {/* <SidebarItem href="/search" current={pathname.startsWith("/search")}>

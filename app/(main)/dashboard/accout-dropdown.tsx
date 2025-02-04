@@ -8,8 +8,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Logout } from "~/components/icons/logout";
-import { User as UserIcon } from "~/components/icons/user";
+import { LogoutIcon } from "~/components/icons/logout";
+import { UserIcon } from "~/components/icons/user";
 import {
   Alert,
   AlertActions,
@@ -50,7 +50,10 @@ const formSchema = z.object({
 export function AccountDropdownMenu({
   anchor,
   user,
-}: { anchor: "top start" | "bottom end"; user: User }) {
+}: {
+  anchor: "top start" | "bottom end";
+  user: User;
+}) {
   const [isAccountSettingOpen, setIsAccountSettingOpen] = useState(false);
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
@@ -105,7 +108,7 @@ export function AccountDropdownMenu({
           </DropdownLabel>
         </DropdownItem>
         <DropdownItem onClick={() => setIsLogoutDialogOpen(true)}>
-          <Logout className="size-4 mr-2" />
+          <LogoutIcon className="size-4 mr-2" />
           <DropdownLabel className="!lowercase">Log out</DropdownLabel>
         </DropdownItem>
       </DropdownMenu>

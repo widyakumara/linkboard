@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export function GlobeIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg

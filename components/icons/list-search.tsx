@@ -1,4 +1,6 @@
-export function ListSearch(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function ListSearchIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

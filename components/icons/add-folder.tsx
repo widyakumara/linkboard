@@ -1,4 +1,6 @@
-export function AddFolder(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function AddFolderIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}
