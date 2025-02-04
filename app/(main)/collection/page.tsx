@@ -8,15 +8,18 @@ import { api } from "~/trpc/server";
 import { Collection } from "./collection";
 
 type DashboardPageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function DashboardPage({
   searchParams,
 }: DashboardPageProps) {
   const { user } = await auth();
+  const searchParamsData = await searchParams;
   const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
+    typeof searchParamsData.search === "string"
+      ? searchParamsData.search
+      : undefined;
 
   if (!user) {
     redirect("/?unauthorized=true");

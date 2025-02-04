@@ -16,15 +16,17 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://linkboard.dev"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+
   return (
     <html lang="en" className="!lowercase">
       <body className={cn(inter.className, GeistSans.variable)}>
-        <TRPCReactProvider cookies={cookies().toString()}>
+        <TRPCReactProvider cookies={cookieStore.toString()}>
           {children}
         </TRPCReactProvider>
       </body>

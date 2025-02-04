@@ -1,6 +1,7 @@
 import {
   DrizzleSQLiteAdapter,
   SQLiteSessionTable,
+  SQLiteUserTable,
 } from "@lucia-auth/adapter-drizzle";
 import { Discord, GitHub } from "arctic";
 import { Lucia, TimeSpan } from "lucia";
@@ -12,7 +13,7 @@ import { type User as DbUser, sessions, users } from "~/server/db/schema";
 const adapter = new DrizzleSQLiteAdapter(
   db,
   sessions as unknown as SQLiteSessionTable,
-  users,
+  users as unknown as SQLiteUserTable
 );
 
 export const lucia = new Lucia(adapter, {
@@ -46,12 +47,12 @@ export const lucia = new Lucia(adapter, {
 export const discord = new Discord(
   env.DISCORD_CLIENT_ID,
   env.DISCORD_CLIENT_SECRET,
-  absoluteUrl("/login/discord/callback"),
+  absoluteUrl("/login/discord/callback")
 );
 
 export const github = new GitHub(
   env.GITHUB_CLIENT_ID,
-  env.GITHUB_CLIENT_SECRET,
+  env.GITHUB_CLIENT_SECRET
 );
 
 declare module "lucia" {

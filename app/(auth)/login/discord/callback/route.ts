@@ -11,7 +11,8 @@ export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
-  const storedState = cookies().get("discord_oauth_state")?.value ?? null;
+  const cookieStore = await cookies();
+  const storedState = cookieStore.get("discord_oauth_state")?.value ?? null;
 
   if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
@@ -37,7 +38,7 @@ export async function GET(request: Request): Promise<Response> {
         JSON.stringify({
           error: "Your Discord account must have a verified email address.",
         }),
-        { status: 400, headers: { Location: Paths.Login } },
+        { status: 400, headers: { Location: Paths.Login } }
       );
     }
 
@@ -50,7 +51,7 @@ export async function GET(request: Request): Promise<Response> {
       where: (table, { eq, and }) =>
         and(
           eq(table.provider, "discord"),
-          eq(table.providerAccountId, discordUser.id),
+          eq(table.providerAccountId, discordUser.id)
         ),
       with: {
         user: true,
@@ -81,13 +82,13 @@ export async function GET(request: Request): Promise<Response> {
 
       const session = await lucia.createSession(
         existingOAuthAccount.userId,
-        {},
+        {}
       );
       const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
+      cookieStore.set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes,
+        sessionCookie.attributes
       );
       return new Response(null, {
         status: 302,
@@ -132,10 +133,10 @@ export async function GET(request: Request): Promise<Response> {
 
       const session = await lucia.createSession(existingUser.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
+      cookieStore.set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes,
+        sessionCookie.attributes
       );
       return new Response(null, {
         status: 302,
@@ -163,10 +164,10 @@ export async function GET(request: Request): Promise<Response> {
 
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
+    cookieStore.set(
       sessionCookie.name,
       sessionCookie.value,
-      sessionCookie.attributes,
+      sessionCookie.attributes
     );
     return new Response(null, {
       status: 302,

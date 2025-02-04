@@ -8,7 +8,7 @@ import {
 import { callProcedure } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
 import { type TRPCErrorResponse } from "@trpc/server/rpc";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { cache } from "react";
 
 import { type AppRouter, appRouter } from "~/server/api/root";
@@ -26,10 +26,12 @@ import { transformer } from "./shared";
 //     headers: heads,
 //   });
 // });
-const createContext = cache(() => {
+const createContext = cache(async () => {
+  const cookieStore = await cookies();
+
   return createTRPCContext({
     headers: new Headers({
-      cookie: cookies().toString(),
+      cookie: cookieStore.toString(),
       "x-trpc-source": "rsc",
     }),
   });

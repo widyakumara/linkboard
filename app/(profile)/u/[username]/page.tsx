@@ -9,22 +9,25 @@ import { BookmarkWithTags } from "~/server/db/schema";
 import { api } from "~/trpc/server";
 
 type ProfilePageProps = {
-  params: { username: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ username: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function ProfilePage({
   params,
   searchParams,
 }: ProfilePageProps) {
+  const searchParamsData = await searchParams;
   const page =
-    typeof searchParams.page === "string" && +searchParams.page > 0
-      ? +searchParams.page
+    typeof searchParamsData.page === "string" && +searchParamsData.page > 0
+      ? +searchParamsData.page
       : 1;
   const perPage = 20;
 
+  const paramsData = await params;
+
   const { bookmarks } = await api.user.getUserBookmarksAndCollections.query({
-    username: params.username,
+    username: paramsData.username,
     bookmarkPage: page,
     bookmarkPerPage: perPage,
   });
@@ -57,14 +60,14 @@ export default async function ProfilePage({
               <PaginationPrevious
                 href={
                   page > 1
-                    ? `/u/${params.username}?page=${page - 1}`
+                    ? `/u/${paramsData.username}?page=${page - 1}`
                     : undefined
                 }
               />
               <PaginationNext
                 href={
                   page < totalPages
-                    ? `/u/${params.username}?page=${page + 1}`
+                    ? `/u/${paramsData.username}?page=${page + 1}`
                     : undefined
                 }
               />
