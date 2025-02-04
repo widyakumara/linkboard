@@ -3,5 +3,8 @@
     "editor.defaultFormatter": "biomejs.biome",
     "editor.codeActionsOnSave": {
         "source.organizeImports": "explicit"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }
