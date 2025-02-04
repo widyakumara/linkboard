@@ -1,6 +1,6 @@
-import * as React from "react";
+import { JSX } from "react";
 
-type SVGProps = React.SVGProps<SVGSVGElement>;
+type SVGProps = JSX.IntrinsicElements["svg"];
 
 export const HomeIcon: React.FC<SVGProps> = (props) => (
   <svg

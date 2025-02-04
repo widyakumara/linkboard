@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { DeleteCollectionDialog } from "~/components/delete-collection-dialog";
 import { EditCollectionDialog } from "~/components/edit-collection-dialog";
-import { Pencil } from "~/components/icons/pencil";
-import { Trash } from "~/components/icons/trash";
+import { PencilIcon } from "~/components/icons/pencil";
+import { TrashIcon } from "~/components/icons/trash";
 import { Button } from "~/components/primitives/button";
 import { Collection } from "~/server/db/schema";
 
@@ -21,10 +21,10 @@ export function CollectionDialogGroup({
   return (
     <>
       <Button plain onClick={() => setIsDeleteDialogOpen(true)}>
-        <Trash className="size-5" />
+        <TrashIcon className="size-5" />
       </Button>
       <Button plain onClick={() => setIsEditDialogOpen(true)}>
-        <Pencil className="size-5" />
+        <PencilIcon className="size-5" />
       </Button>
 
       <DeleteCollectionDialog

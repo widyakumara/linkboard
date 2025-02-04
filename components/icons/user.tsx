@@ -1,4 +1,6 @@
-export function User(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function UserIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

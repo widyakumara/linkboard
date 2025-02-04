@@ -1,5 +1,7 @@
 import * as React from "react";
-type SVGProps = React.SVGProps<SVGSVGElement>;
+import { JSX } from "react";
+
+type SVGProps = JSX.IntrinsicElements["svg"];
 
 export const BookmarkIcon: React.FC<SVGProps> = (props) => (
   <svg

@@ -1,4 +1,6 @@
-export function Refresh(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function RefreshIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

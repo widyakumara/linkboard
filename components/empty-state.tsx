@@ -1,7 +1,7 @@
 import { AddBookmarkIcon } from "~/components/icons/add-bookmark";
 import { FolderIcon } from "~/components/icons/folder";
-import { ListSearch } from "~/components/icons/list-search";
-import { Sparkle } from "~/components/icons/sparkle";
+import { ListSearchIcon } from "~/components/icons/list-search";
+import { SparkleIcon } from "~/components/icons/sparkle";
 import { AddCollectionDialog } from "./add-collection-dialog";
 import { AddLinkDialog } from "./add-link-dialog";
 
@@ -24,8 +24,8 @@ interface EmptyStateProps {
 
 const icons = {
   bookmark: AddBookmarkIcon,
-  search: ListSearch,
-  discover: Sparkle,
+  search: ListSearchIcon,
+  discover: SparkleIcon,
   collection: FolderIcon,
   collectionBookmark: AddBookmarkIcon,
 };
@@ -51,8 +51,8 @@ export function EmptyState({
     action?.dialog === "addLink"
       ? AddLinkDialog
       : action?.dialog === "addCollection"
-        ? AddCollectionDialog
-        : null;
+      ? AddCollectionDialog
+      : null;
 
   return (
     <div

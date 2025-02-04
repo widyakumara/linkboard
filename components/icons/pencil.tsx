@@ -1,4 +1,6 @@
-export function Pencil(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function PencilIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

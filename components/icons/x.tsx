@@ -1,4 +1,6 @@
-export function X(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function XIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

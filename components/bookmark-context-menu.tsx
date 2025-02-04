@@ -9,13 +9,13 @@ import { BookmarkWithTags } from "~/server/db/schema";
 import { api } from "~/trpc/react";
 import { AddBookmarkToCollectionDialog } from "./add-bookmark-to-collection-dialog";
 import { EditBookmarkDialog } from "./edit-bookmark-dialog";
-import { AddFolder } from "./icons/add-folder";
-import { Copy } from "./icons/copy";
-import { LockClose } from "./icons/lock-close";
-import { LockOpen } from "./icons/lock-open";
-import { Pencil } from "./icons/pencil";
-import { Refresh } from "./icons/refresh";
-import { Trash } from "./icons/trash";
+import { AddFolderIcon } from "./icons/add-folder";
+import { CopyIcon } from "./icons/copy";
+import { LockCloseIcon } from "./icons/lock-close";
+import { LockOpenIcon } from "./icons/lock-open";
+import { PencilIcon } from "./icons/pencil";
+import { RefreshIcon } from "./icons/refresh";
+import { TrashIcon } from "./icons/trash";
 import {
   Alert,
   AlertActions,
@@ -27,7 +27,9 @@ import { ContextMenuContent, ContextMenuItem } from "./primitives/context-menu";
 
 export function BookmarkContextMenu({
   bookmark,
-}: { bookmark: BookmarkWithTags }) {
+}: {
+  bookmark: BookmarkWithTags;
+}) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isToggleBookmarkDialogOpen, setIsToggleBookmarkDialogOpen] =
     useState(false);
@@ -57,16 +59,14 @@ export function BookmarkContextMenu({
     onSuccess: () => {
       revalidateFromClient("/dashboard");
       toast.success(
-        bookmark.isPublic
-          ? "Bookmark is now private"
-          : "Bookmark is now public",
+        bookmark.isPublic ? "Bookmark is now private" : "Bookmark is now public"
       );
     },
   });
 
   const ContextMenuItems = [
     {
-      icon: Copy,
+      icon: CopyIcon,
       label: "Copy",
       onClick: async (bookmark: BookmarkWithTags) => {
         await navigator.clipboard.writeText(bookmark.url);
@@ -74,23 +74,23 @@ export function BookmarkContextMenu({
       },
     },
     {
-      icon: Pencil,
+      icon: PencilIcon,
       label: "Edit",
       onClick: () => setIsEditBookmarkDialogOpen(true),
     },
     {
-      icon: Trash,
+      icon: TrashIcon,
       label: "Delete",
       onClick: () => setIsDeleteDialogOpen(true),
     },
     {
-      icon: Refresh,
+      icon: RefreshIcon,
       label: "Refresh",
       onClick: async (bookmark: BookmarkWithTags) =>
         refetchBookmark({ id: bookmark.id }),
     },
     {
-      icon: bookmark.isPublic ? LockClose : LockOpen,
+      icon: bookmark.isPublic ? LockCloseIcon : LockOpenIcon,
       label: bookmark.isPublic ? "Make private" : "Make public",
       onClick: bookmark.isPublic
         ? async (bookmark: BookmarkWithTags) =>
@@ -98,7 +98,7 @@ export function BookmarkContextMenu({
         : () => setIsToggleBookmarkDialogOpen(true),
     },
     {
-      icon: AddFolder,
+      icon: AddFolderIcon,
       label: "Add to collection",
       onClick: () => setIsAddCollectionDialogOpen(true),
     },

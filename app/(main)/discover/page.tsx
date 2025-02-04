@@ -10,19 +10,22 @@ import { BookmarkWithTags } from "~/server/db/schema";
 import { api } from "~/trpc/server";
 
 type DiscoverPageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function DiscoverPage({
   searchParams,
 }: DiscoverPageProps) {
+  const searchParamsData = await searchParams;
   const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
+    typeof searchParamsData.search === "string"
+      ? searchParamsData.search
+      : undefined;
 
   const perPage = 20;
   const page =
-    typeof searchParams.page === "string" && +searchParams.page > 0
-      ? +searchParams.page
+    typeof searchParamsData.page === "string" && +searchParamsData.page > 0
+      ? +searchParamsData.page
       : 1;
 
   const { bookmarks, totalBookmarks } =

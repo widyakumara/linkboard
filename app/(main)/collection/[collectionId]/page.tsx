@@ -8,9 +8,8 @@ import { api } from "~/trpc/server";
 import { CollectionDialogGroup } from "./dialog-group";
 
 type CollectionPageProps = {
-  params: { collectionId: string };
-
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ collectionId: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function CollectionPage({
@@ -18,15 +17,20 @@ export default async function CollectionPage({
   searchParams,
 }: CollectionPageProps) {
   const { user } = await auth();
+
+  const searchParamsData = await searchParams;
   const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
+    typeof searchParamsData.search === "string"
+      ? searchParamsData.search
+      : undefined;
+  const paramsData = await params;
 
   if (!user) {
     redirect("/?unauthorized=true");
   }
 
   const collection = await api.collection.get.query({
-    id: params.collectionId,
+    id: paramsData.collectionId,
   });
   const bookmarks = collection.bookmarks.map((bookmark) => bookmark.bookmark);
 

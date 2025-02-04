@@ -1,4 +1,6 @@
-export function Discord(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function DiscordIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}

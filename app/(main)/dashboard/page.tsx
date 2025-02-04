@@ -13,15 +13,18 @@ import { BookmarkWithTags } from "~/server/db/schema";
 import { api } from "~/trpc/server";
 
 type DashboardPageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function DashboardPage({
   searchParams,
 }: DashboardPageProps) {
   const { user } = await auth();
+  const searchParamsData = await searchParams;
   const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
+    typeof searchParamsData.search === "string"
+      ? searchParamsData.search
+      : undefined;
 
   if (!user) {
     redirect("/?unauthorized=true");
@@ -29,8 +32,8 @@ export default async function DashboardPage({
 
   const perPage = 20;
   const page =
-    typeof searchParams.page === "string" && +searchParams.page > 0
-      ? +searchParams.page
+    typeof searchParamsData.page === "string" && +searchParamsData.page > 0
+      ? +searchParamsData.page
       : 1;
 
   const { bookmarks, totalBookmarks } = await api.bookmark.myBookmarks.query({

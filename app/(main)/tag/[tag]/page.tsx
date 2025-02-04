@@ -5,26 +5,31 @@ import { BookmarkWithTags } from "~/server/db/schema";
 import { api } from "~/trpc/server";
 
 type TagPageProps = {
-  params: { tag: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ tag: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function TagPage({ params, searchParams }: TagPageProps) {
+  const searchParamsData = await searchParams;
   const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
+    typeof searchParamsData.search === "string"
+      ? searchParamsData.search
+      : undefined;
+  const paramsData = await params;
+
   const bookmarks = await api.bookmark.getBookmarksByTag.query({
-    tagName: params.tag,
+    tagName: paramsData.tag,
     search,
   });
 
   return (
     <div className="space-y-8">
       <div className="flex gap-4 mx-auto">
-        <Search route={"/tag/" + params.tag} search={search} />
+        <Search route={"/tag/" + paramsData.tag} search={search} />
       </div>
 
       <div>
-        <h1 className="text-xl font-semibold mb-2 mx-3">{params.tag}</h1>
+        <h1 className="text-xl font-semibold mb-2 mx-3">{paramsData.tag}</h1>
 
         {bookmarks.length > 0 ? (
           <BookmarkList

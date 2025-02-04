@@ -9,28 +9,32 @@ import { BookmarkWithTags } from "~/server/db/schema";
 import { api } from "~/trpc/server";
 
 type CollectionPageProps = {
-  params: {
+  params: Promise<{
     collectionId: string;
     username: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
+  }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function CollectionPage({
   params,
   searchParams,
 }: CollectionPageProps) {
+  const searchParamsData = await searchParams;
   const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
+    typeof searchParamsData.search === "string"
+      ? searchParamsData.search
+      : undefined;
   const perPage = 10;
   const page =
-    typeof searchParams.page === "string" && +searchParams.page > 0
-      ? +searchParams.page
+    typeof searchParamsData.page === "string" && +searchParamsData.page > 0
+      ? +searchParamsData.page
       : 1;
+  const paramsData = await params;
 
   const collection = await api.collection.getUserCollectionByUsername.query({
-    id: params.collectionId,
-    username: params.username,
+    id: paramsData.collectionId,
+    username: paramsData.username,
     page,
     perPage,
   });
@@ -48,7 +52,7 @@ export default async function CollectionPage({
             route="user-profile"
             bookmarks={
               collection.bookmarks.items.map(
-                (b) => b.bookmark,
+                (b) => b.bookmark
               ) as unknown as BookmarkWithTags[]
             }
           />
@@ -70,18 +74,18 @@ export default async function CollectionPage({
               <PaginationPrevious
                 href={
                   page > 1
-                    ? `/u/${params.username}/collection/${params.collectionId}?page=${
-                        page - 1
-                      }${search ? `&search=${search}` : ""}`
+                    ? `/u/${paramsData.username}/collection/${
+                        paramsData.collectionId
+                      }?page=${page - 1}${search ? `&search=${search}` : ""}`
                     : undefined
                 }
               />
               <PaginationNext
                 href={
                   page < totalPages
-                    ? `/u/${params.username}/collection/${params.collectionId}?page=${
-                        page + 1
-                      }${search ? `&search=${search}` : ""}`
+                    ? `/u/${paramsData.username}/collection/${
+                        paramsData.collectionId
+                      }?page=${page + 1}${search ? `&search=${search}` : ""}`
                     : undefined
                 }
               />

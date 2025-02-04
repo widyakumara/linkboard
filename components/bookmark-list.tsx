@@ -1,5 +1,5 @@
 import { BookmarkContextMenu } from "~/components/bookmark-context-menu";
-import { LockOpen } from "~/components/icons/lock-open";
+import { LockOpenIcon } from "~/components/icons/lock-open";
 import {
   ContextMenu,
   ContextMenuTrigger,
@@ -37,7 +37,7 @@ export const BookmarkList = async ({ bookmarks, route }: BookmarkListProps) => {
                 {route !== "discover" &&
                   route !== "user-profile" &&
                   bookmark.isPublic && (
-                    <LockOpen className="size-4 text-muted-foreground mr-1" />
+                    <LockOpenIcon className="size-4 text-muted-foreground mr-1" />
                   )}
                 {bookmark.title ? (
                   <>

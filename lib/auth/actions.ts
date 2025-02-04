@@ -1,7 +1,7 @@
 "use server";
 
 import { and, eq } from "drizzle-orm";
-import { Scrypt, generateId } from "lucia";
+import { generateId } from "lucia";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lucia } from "~/lib/auth";
@@ -24,17 +24,18 @@ export async function logout(): Promise<{ error: string } | void> {
   }
   await lucia.invalidateSession(session.id);
   const sessionCookie = lucia.createBlankSessionCookie();
-  cookies().set(
+  const cookieStore = await cookies();
+  cookieStore.set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes,
+    sessionCookie.attributes
   );
   return redirect("/");
 }
 
 export async function linkOAuthAccount(
   provider: string,
-  providerAccountId: string,
+  providerAccountId: string
 ): Promise<{ error?: string; success?: boolean }> {
   const { user } = await validateRequest();
   if (!user) {
@@ -46,7 +47,7 @@ export async function linkOAuthAccount(
       where: (table, { eq, and }) =>
         and(
           eq(table.provider, provider),
-          eq(table.providerAccountId, providerAccountId),
+          eq(table.providerAccountId, providerAccountId)
         ),
     });
 
@@ -74,7 +75,7 @@ export async function linkOAuthAccount(
 }
 
 export async function unlinkOAuthAccount(
-  provider: string,
+  provider: string
 ): Promise<{ error?: string; success?: boolean }> {
   const { user } = await validateRequest();
   if (!user) {
@@ -87,8 +88,8 @@ export async function unlinkOAuthAccount(
       .where(
         and(
           eq(oauthAccounts.userId, user.id),
-          eq(oauthAccounts.provider, provider),
-        ),
+          eq(oauthAccounts.provider, provider)
+        )
       );
 
     if (result.rowsAffected === 0) {

@@ -1,4 +1,6 @@
-export function Logo(props: JSX.IntrinsicElements["svg"]) {
+import { JSX } from "react";
+
+export function LogoIcon(props: JSX.IntrinsicElements["svg"]) {
   return (
     <svg
       {...props}
